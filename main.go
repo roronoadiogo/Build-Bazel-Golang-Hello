@@ -18,8 +18,8 @@ func main() {
 
 	server.Use(middleware.Timeout(60 * time.Second))
 
-	server.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello World with Chi"))
+	server.Get("/hello", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Hello World with Chi and Bazel"))
 	})
 
 	http.ListenAndServe(":3333", server)
