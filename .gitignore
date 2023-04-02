@@ -16,3 +16,10 @@
 
 # Go workspace file
 go.work
+
+# Bazel output directories
+bazel-*
+
+# Generated files
+*.pb.go
+*_pb2.py
