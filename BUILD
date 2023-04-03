@@ -1,5 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("@bazel_gazelle//:def.bzl", "gazelle")
+load("@io_bazel_rules_docker//go:image.bzl", "go_image")
+load("@io_bazel_rules_docker//container:container.bzl", "container_push")
 
 # gazelle:prefix github.com/roronoadiogo/build-bazel-golang-hello
 gazelle(name = "gazelle")
@@ -12,6 +14,21 @@ gazelle(
         "-prune",
     ],
     command = "update-repos",
+)
+
+go_image(
+    name = "image_docker_example",
+    binary = ":bazel-project-example",
+    importpath = "github.com/roronoadiogo/build-bazel-golang-hello",
+)
+
+container_push(
+   name = "push_api",
+   format = "Docker",
+   image = ":image_docker_example",
+   registry = "index.docker.io",
+   repository = "roronoadiogo/go-bazel-example",
+   tag = "bazel",
 )
 
 go_library(
