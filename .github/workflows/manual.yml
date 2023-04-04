@@ -10,13 +10,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install Bazel and build Docker image
+    
+    - name: Install Java
       run: |
-        sudo apt-get update && sudo apt-get install -y curl gnupg
+        sudo apt-get update && sudo apt-get install -y curl gnupg default-jdk
+    
+    - name: Install Bazel
+      run: |
         curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg
         sudo mv bazel.gpg /etc/apt/trusted.gpg.d/
         echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
         sudo apt-get update && sudo apt-get install -y bazel
+    
+    - name: Build Docker image
+      run: |
         echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
         bazel run //:push_api
-        
