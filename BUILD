@@ -27,7 +27,7 @@ container_push(
    format = "Docker",
    image = ":image_docker_example",
    registry = "index.docker.io",
-   repository = "roronoadiogo/go-bazel-example",
+   repository = "roronoadiogo/build-bazel-golang-hello",
    tag = "bazel",
 )
 
