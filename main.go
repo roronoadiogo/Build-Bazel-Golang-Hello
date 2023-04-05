@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"time"
 
@@ -21,6 +22,8 @@ func main() {
 	server.Get("/hello", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Hello World with Chi and Bazel"))
 	})
+
+	log.Println("Server Online and waiting requests...")
 
 	http.ListenAndServe(":3333", server)
 

@@ -16,21 +16,6 @@ gazelle(
     command = "update-repos",
 )
 
-go_image(
-    name = "image_docker_example",
-    binary = ":bazel-project-example",
-    importpath = "github.com/roronoadiogo/build-bazel-golang-hello",
-)
-
-container_push(
-   name = "push_api",
-   format = "Docker",
-   image = ":image_docker_example",
-   registry = "index.docker.io",
-   repository = "roronoadiogo/build-bazel-golang-hello",
-   tag = "bazel",
-)
-
 go_library(
     name = "project_lib",
     srcs = ["main.go"],
@@ -46,4 +31,20 @@ go_binary(
     name = "bazel-project-example",
     embed = [":project_lib"],
     visibility = ["//visibility:public"],
+)
+
+go_image(
+    name = "image_docker_example",
+    binary = ":bazel-project-example",
+    importpath = "github.com/roronoadiogo/build-bazel-golang-hello",
+    ports = ["3333"],
+)
+
+container_push(
+    name = "push_image_docker_bazel",
+    format = "Docker",
+    image = ":image_docker_example",
+    registry = "docker.io",
+    repository = "roronoadiogo/bazel-project-example",
+    tag = "dev",
 )
