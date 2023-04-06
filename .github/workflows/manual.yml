@@ -25,4 +25,4 @@ jobs:
     - name: Build Docker image
       run: |
         echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
-        bazel run //:push_api
+        bazel run //:push_image_docker_bazel
